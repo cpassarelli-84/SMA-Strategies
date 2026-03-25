@@ -1,0 +1,1570 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+     PROPRIETARY SMA STRATEGIES — Core Content Redesign
+     Bull Run Investment Management, LLC
+     No nav, no secondary hero, no footer — core content only.
+     All 4 canvas animations + live Google Sheets data + comparative chart.
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   CSS VARIABLES & FONTS
+   ══════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap');
+
+.psma-page {
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --navy: #02131F;
+  --dark-navy: #041A29;
+  --cream: #FAF8F3;
+  --cream-alt: #F0ECE1;
+  --gold: #C9A84C;
+  --gold-light: #E2C47A;
+  --gold-pale: #EED193;
+  --gold-dark: #A07830;
+  --blue-accent: #31547E;
+  --inn-color: #D4A843;
+  --gro-color: #5A8A3C;
+  --core-color: #5B7FB5;
+  --lv-color: #9B72B0;
+  --white: #FFFFFF;
+  font-family: var(--font-body);
+  color: var(--navy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+.psma-page *, .psma-page *::before, .psma-page *::after { box-sizing: border-box; }
+
+/* ══════════════════════════════════════════════════════════════
+   FULL-BLEED SECTION SYSTEM
+   ══════════════════════════════════════════════════════════════ */
+.psma-section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 100px 0;
+}
+.psma-section--white   { background: var(--white); }
+.psma-section--cream   { background: var(--cream); }
+.psma-section--cream2  { background: var(--cream-alt); }
+.psma-section--navy    { background: var(--dark-navy); }
+.psma-section--navy .psma-heading,
+.psma-section--navy .psma-text,
+.psma-section--navy .psma-eyebrow { color: var(--cream); }
+.psma-section--navy .psma-text { color: rgba(240, 236, 225, 0.7); }
+.psma-section--navy .psma-eyebrow { color: var(--gold); }
+
+.psma-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ══════════════════════════════════════════════════════════════ */
+.psma-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.psma-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1.5px;
+  background: var(--gold);
+}
+.psma-heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--navy);
+  margin: 0 0 20px;
+}
+.psma-heading--hero {
+  font-size: clamp(38px, 5vw, 64px);
+}
+.psma-heading--lg {
+  font-size: clamp(32px, 4vw, 48px);
+}
+.psma-heading--md {
+  font-size: clamp(26px, 3vw, 38px);
+}
+.psma-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+.psma-hr {
+  border: none;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.2));
+  margin: 0 0 0;
+  border-radius: 2px;
+}
+.psma-text {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(2, 19, 31, 0.72);
+  margin: 0 0 20px;
+  max-width: 680px;
+}
+.psma-text:last-of-type { margin-bottom: 0; }
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL FADE-IN
+   ══════════════════════════════════════════════════════════════ */
+.psma-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SECTION 1 — HERO (Two-Column with Orbit)
+   ══════════════════════════════════════════════════════════════ */
+.psma-hero { padding: 120px 0 100px; }
+.psma-hero .psma-eyebrow { justify-content: flex-start; }
+.psma-hero .psma-heading { max-width: 620px; }
+.psma-hero .psma-hr { margin: 0 0 32px; }
+.psma-hero .psma-text { max-width: 560px; }
+.psma-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.psma-hero-left { }
+.psma-hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.psma-hero-stats {
+  display: flex;
+  gap: 36px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.psma-hero-stat { }
+.psma-hero-stat__value {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.1;
+}
+.psma-hero-stat__label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(2,19,31,0.45);
+  margin-top: 6px;
+}
+
+/* ── Orbit Animation ── */
+.psma-orbit {
+  position: relative;
+  width: 480px;
+  height: 480px;
+}
+.psma-orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.12);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.psma-orbit-ring--1 { width: 100%; height: 100%; }
+.psma-orbit-ring--2 { width: 78%; height: 78%; }
+.psma-orbit-ring--3 { width: 56%; height: 56%; }
+.psma-orbit-ring--4 { width: 34%; height: 34%; }
+.psma-orbit-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--dark-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  box-shadow: 0 0 40px rgba(2,19,31,0.25), 0 0 80px rgba(201,168,76,0.08);
+}
+.psma-orbit-center span {
+  color: var(--gold);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+}
+.psma-orbit-dot {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white);
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  z-index: 3;
+}
+.psma-orbit-dot--inn { background: var(--inn-color); animation: psma-orb1 20s linear infinite; }
+.psma-orbit-dot--gro { background: var(--gro-color); animation: psma-orb2 25s linear infinite; }
+.psma-orbit-dot--cor { background: var(--core-color); animation: psma-orb3 18s linear infinite; }
+.psma-orbit-dot--low { background: var(--lv-color); animation: psma-orb4 22s linear infinite; }
+@keyframes psma-orb1 {
+  from { transform: translate(-50%,-50%) rotate(0deg) translateX(230px) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg) translateX(230px) rotate(-360deg); }
+}
+@keyframes psma-orb2 {
+  from { transform: translate(-50%,-50%) rotate(90deg) translateX(184px) rotate(-90deg); }
+  to   { transform: translate(-50%,-50%) rotate(450deg) translateX(184px) rotate(-450deg); }
+}
+@keyframes psma-orb3 {
+  from { transform: translate(-50%,-50%) rotate(180deg) translateX(138px) rotate(-180deg); }
+  to   { transform: translate(-50%,-50%) rotate(540deg) translateX(138px) rotate(-540deg); }
+}
+@keyframes psma-orb4 {
+  from { transform: translate(-50%,-50%) rotate(270deg) translateX(88px) rotate(-270deg); }
+  to   { transform: translate(-50%,-50%) rotate(630deg) translateX(88px) rotate(-630deg); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SECTION 2 — STRATEGY SPECTRUM
+   ══════════════════════════════════════════════════════════════ */
+.psma-spectrum { padding: 100px 0; }
+.psma-spectrum__wrap { margin-top: 48px; }
+.psma-spectrum__bar {
+  position: relative;
+  height: 6px;
+  background: linear-gradient(90deg, #9B72B0 0%, #5B7FB5 30%, #5A8A3C 62%, #D4A843 100%);
+  border-radius: 3px;
+  margin: 0 0 56px;
+}
+.psma-spectrum__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(2,19,31,0.4);
+  margin-top: -44px;
+  margin-bottom: 56px;
+}
+.psma-spectrum__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.psma-spectrum__card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 32px 28px 28px;
+  border: 1px solid rgba(2,19,31,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.psma-section--cream .psma-spectrum__card { background: var(--white); }
+.psma-section--cream2 .psma-spectrum__card { background: var(--white); }
+.psma-spectrum__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.psma-spectrum__card--lv::before  { background: var(--lv-color); }
+.psma-spectrum__card--core::before { background: var(--core-color); }
+.psma-spectrum__card--gro::before  { background: var(--gro-color); }
+.psma-spectrum__card--inn::before  { background: var(--inn-color); }
+.psma-spectrum__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(2,19,31,0.08);
+}
+.psma-spectrum__card-name {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.psma-spectrum__card-target {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.psma-spectrum__card-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(2,19,31,0.6);
+  margin-bottom: 16px;
+}
+.psma-spectrum__card-holdings {
+  font-size: 12px;
+  color: rgba(2,19,31,0.4);
+  font-weight: 500;
+}
+.psma-spectrum__card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 16px;
+  transition: gap 0.2s;
+}
+.psma-spectrum__card-link:hover { gap: 10px; }
+.psma-spectrum__card-link svg { width: 14px; height: 14px; }
+
+/* ══════════════════════════════════════════════════════════════
+   STRATEGY SHOWCASE (Shared)
+   ══════════════════════════════════════════════════════════════ */
+.psma-showcase__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  margin-top: 48px;
+}
+.psma-showcase__visual {
+  position: relative;
+  overflow: visible;
+  background: transparent;
+  aspect-ratio: 580/520;
+}
+.psma-showcase__visual canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.psma-showcase__content {
+  display: flex;
+  flex-direction: column;
+}
+.psma-showcase__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid;
+  border-radius: 100px;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+.psma-showcase__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: psma-bp 2s ease-in-out infinite;
+}
+@keyframes psma-bp {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.psma-showcase__text {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(2,19,31,0.72);
+  margin: 0 0 20px;
+}
+.psma-section--navy .psma-showcase__text { color: rgba(240,236,225,0.68); }
+.psma-showcase__stats {
+  border-radius: 10px;
+  padding: 24px 28px 20px;
+  margin-bottom: 28px;
+}
+.psma-section--white .psma-showcase__stats { background: var(--cream); }
+.psma-section--cream .psma-showcase__stats { background: var(--white); }
+.psma-section--cream2 .psma-showcase__stats { background: var(--white); }
+.psma-section--navy .psma-showcase__stats { background: rgba(250,248,243,0.06); border: 1px solid rgba(201,168,76,0.12); }
+.psma-showcase__stat-header {
+  display: grid;
+  grid-template-columns: 1fr 110px 110px;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(2,19,31,0.08);
+}
+.psma-section--navy .psma-showcase__stat-header { border-color: rgba(240,236,225,0.1); }
+.psma-showcase__stat-header-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(2,19,31,0.35);
+  font-weight: 500;
+}
+.psma-showcase__stat-header-col {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  text-align: center;
+}
+.psma-showcase__stat-row {
+  display: grid;
+  grid-template-columns: 1fr 110px 110px;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(2,19,31,0.05);
+}
+.psma-section--navy .psma-showcase__stat-row { border-color: rgba(240,236,225,0.06); }
+.psma-showcase__stat-row:last-of-type { border-bottom: none; }
+.psma-showcase__stat-period-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.psma-section--navy .psma-showcase__stat-period-label { color: var(--cream); }
+.psma-showcase__stat-period-range {
+  display: block;
+  font-size: 12px;
+  color: rgba(2,19,31,0.4);
+  margin-top: 2px;
+}
+.psma-section--navy .psma-showcase__stat-period-range { color: rgba(240,236,225,0.35); }
+.psma-showcase__stat-val {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.1;
+}
+.psma-showcase__stat-val--sp {
+  color: #888 !important;
+  font-size: 24px;
+}
+.psma-showcase__stat-footer {
+  font-size: 11px;
+  color: rgba(2,19,31,0.35);
+  margin-top: 12px;
+  text-align: center;
+}
+.psma-section--navy .psma-showcase__stat-footer { color: rgba(240,236,225,0.3); }
+
+/* Buttons */
+.psma-showcase__actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.psma-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  line-height: 1.3;
+}
+.psma-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.psma-btn--strategy { color: #fff; }
+.psma-btn--outline { background: transparent; color: var(--navy); }
+.psma-section--navy .psma-btn--outline { border-color: rgba(240,236,225,0.3); color: var(--cream); }
+.psma-btn svg { flex-shrink: 0; }
+
+/* ══════════════════════════════════════════════════════════════
+   SECTION 7 — COMPARATIVE CHART
+   ══════════════════════════════════════════════════════════════ */
+.psma-chart-section { padding: 100px 0; }
+.psma-chart-section .psma-heading { text-align: center; }
+.psma-chart-section .psma-eyebrow { justify-content: center; }
+.psma-chart-section .psma-hr { margin: 0 auto 16px; }
+.psma-chart-section .psma-text { text-align: center; margin: 0 auto 48px; }
+.psma-chart-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.psma-chart-toggle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(2,19,31,0.12);
+  background: transparent;
+  color: rgba(2,19,31,0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.psma-chart-toggle.active {
+  background: var(--dark-navy);
+  color: var(--cream);
+  border-color: var(--dark-navy);
+}
+.psma-chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid rgba(2,19,31,0.06);
+  overflow: hidden;
+}
+.psma-section--navy .psma-chart-wrap { background: rgba(250,248,243,0.04); border-color: rgba(201,168,76,0.12); }
+.psma-chart-wrap canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.psma-chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.psma-chart-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(2,19,31,0.6);
+}
+.psma-chart-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SECTION 8 — EXPLORE / CTA
+   ══════════════════════════════════════════════════════════════ */
+.psma-explore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.psma-explore-card {
+  background: rgba(250,248,243,0.06);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 12px;
+  padding: 36px 28px 28px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.psma-section--cream .psma-explore-card,
+.psma-section--cream2 .psma-explore-card,
+.psma-section--white .psma-explore-card {
+  background: var(--white);
+  border-color: rgba(2,19,31,0.06);
+}
+.psma-explore-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+.psma-explore-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: rgba(201,168,76,0.1);
+  color: var(--gold);
+}
+.psma-section--navy .psma-explore-card__icon { background: rgba(201,168,76,0.12); }
+.psma-explore-card__title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+.psma-section--navy .psma-explore-card__title { color: var(--cream); }
+.psma-explore-card__desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(2,19,31,0.55);
+  margin-bottom: 20px;
+}
+.psma-section--navy .psma-explore-card__desc { color: rgba(240,236,225,0.5); }
+.psma-explore-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+.psma-explore-card__link:hover { gap: 10px; }
+
+/* CTA block */
+.psma-cta {
+  text-align: center;
+  margin-top: 80px;
+  padding: 64px 48px;
+  background: var(--dark-navy);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.psma-section--navy .psma-cta { background: rgba(250,248,243,0.04); border: 1px solid rgba(201,168,76,0.1); }
+.psma-cta .psma-heading { color: var(--cream); margin-bottom: 16px; }
+.psma-cta .psma-text { color: rgba(240,236,225,0.6); margin: 0 auto 32px; text-align: center; }
+.psma-cta__btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.psma-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+}
+.psma-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.psma-cta__btn--gold { background: var(--gold); color: var(--dark-navy); }
+.psma-cta__btn--outline { border-color: rgba(240,236,225,0.3); color: var(--cream); background: transparent; }
+
+/* ══════════════════════════════════════════════════════════════
+   SECTION 9 — DISCLOSURES
+   ══════════════════════════════════════════════════════════════ */
+.psma-disclosures {
+  padding: 48px 0 64px;
+}
+.psma-disclosures__text {
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(2,19,31,0.35);
+  max-width: 960px;
+  margin: 0 auto;
+}
+.psma-disclosures__text p { margin: 0 0 12px; }
+.psma-disclosures__text a { color: var(--gold); text-decoration: none; }
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .psma-spectrum__cards { grid-template-columns: repeat(2, 1fr); }
+  .psma-explore-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 960px) {
+  .psma-showcase__grid { grid-template-columns: 1fr; gap: 40px; }
+  .psma-showcase__visual { max-width: 540px; margin: 0 auto; }
+  .psma-inner { padding: 0 24px; }
+  .psma-section { padding: 64px 0; }
+  .psma-hero { padding: 80px 0 64px; }
+  .psma-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .psma-hero-right { justify-content: center; }
+  .psma-orbit { width: 360px; height: 360px; }
+  .psma-orbit-center { width: 70px; height: 70px; }
+  .psma-orbit-center span { font-size: 11px; }
+  .psma-orbit-dot { width: 44px; height: 44px; font-size: 9px; }
+  @keyframes psma-orb1 {
+    from { transform: translate(-50%,-50%) rotate(0deg) translateX(172px) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg) translateX(172px) rotate(-360deg); }
+  }
+  @keyframes psma-orb2 {
+    from { transform: translate(-50%,-50%) rotate(90deg) translateX(138px) rotate(-90deg); }
+    to   { transform: translate(-50%,-50%) rotate(450deg) translateX(138px) rotate(-450deg); }
+  }
+  @keyframes psma-orb3 {
+    from { transform: translate(-50%,-50%) rotate(180deg) translateX(104px) rotate(-180deg); }
+    to   { transform: translate(-50%,-50%) rotate(540deg) translateX(104px) rotate(-540deg); }
+  }
+  @keyframes psma-orb4 {
+    from { transform: translate(-50%,-50%) rotate(270deg) translateX(66px) rotate(-270deg); }
+    to   { transform: translate(-50%,-50%) rotate(630deg) translateX(66px) rotate(-630deg); }
+  }
+}
+@media (max-width: 768px) {
+  .psma-spectrum__cards { grid-template-columns: 1fr; }
+  .psma-explore-grid { grid-template-columns: 1fr; }
+  .psma-hero-stats { gap: 32px; }
+  .psma-hero-stat__value { font-size: 36px; }
+  .psma-chart-wrap { height: 320px; }
+  .psma-showcase__stat-header,
+  .psma-showcase__stat-row { grid-template-columns: 1fr 90px 90px; gap: 8px; }
+  .psma-showcase__stat-val { font-size: 22px; }
+  .psma-showcase__stat-val--sp { font-size: 20px; }
+  .psma-showcase__stats { padding: 20px 18px 16px; }
+  .psma-showcase__actions { flex-direction: column; }
+  .psma-showcase__actions .psma-btn { text-align: center; justify-content: center; }
+  .psma-cta { padding: 48px 24px; }
+  .psma-orbit { width: 300px; height: 300px; }
+  .psma-orbit-center { width: 60px; height: 60px; }
+  .psma-orbit-center span { font-size: 10px; }
+  .psma-orbit-dot { width: 40px; height: 40px; font-size: 8px; }
+  @keyframes psma-orb1 {
+    from { transform: translate(-50%,-50%) rotate(0deg) translateX(142px) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg) translateX(142px) rotate(-360deg); }
+  }
+  @keyframes psma-orb2 {
+    from { transform: translate(-50%,-50%) rotate(90deg) translateX(114px) rotate(-90deg); }
+    to   { transform: translate(-50%,-50%) rotate(450deg) translateX(114px) rotate(-450deg); }
+  }
+  @keyframes psma-orb3 {
+    from { transform: translate(-50%,-50%) rotate(180deg) translateX(86px) rotate(-180deg); }
+    to   { transform: translate(-50%,-50%) rotate(540deg) translateX(86px) rotate(-540deg); }
+  }
+  @keyframes psma-orb4 {
+    from { transform: translate(-50%,-50%) rotate(270deg) translateX(55px) rotate(-270deg); }
+    to   { transform: translate(-50%,-50%) rotate(630deg) translateX(55px) rotate(-630deg); }
+  }
+}
+@media (max-width: 640px) {
+  .psma-spectrum__labels { font-size: 9px; }
+}
+</style>
+
+
+<div class="psma-page">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — HERO (White)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--white psma-hero">
+  <div class="psma-inner">
+    <div class="psma-hero-grid">
+      <div class="psma-hero-left">
+        <div class="psma-fade">
+          <span class="psma-eyebrow">Proprietary Management</span>
+          <h1 class="psma-heading psma-heading--hero">Four Actively Managed SMAs for <em>High-Growth</em> Public Equities</h1>
+          <hr class="psma-hr">
+          <p class="psma-text">Our proprietary equity strategies span the full growth spectrum — from aggressive innovation to defensive capital preservation. Each is offered as a Separately Managed Account on the Charles Schwab institutional platform, delivering direct ownership, full transparency, and precise tax management.</p>
+        </div>
+        <div class="psma-hero-stats psma-fade" style="transition-delay:0.15s;">
+          <div class="psma-hero-stat">
+            <div class="psma-hero-stat__value">4</div>
+            <div class="psma-hero-stat__label">SMA Strategies</div>
+          </div>
+          <div class="psma-hero-stat">
+            <div class="psma-hero-stat__value">$250K</div>
+            <div class="psma-hero-stat__label">Minimum Investment</div>
+          </div>
+          <div class="psma-hero-stat">
+            <div class="psma-hero-stat__value">1.50%</div>
+            <div class="psma-hero-stat__label">Annual Advisory Fee</div>
+          </div>
+        </div>
+      </div>
+      <div class="psma-hero-right psma-fade" style="transition-delay:0.2s;">
+        <div class="psma-orbit">
+          <div class="psma-orbit-ring psma-orbit-ring--1"></div>
+          <div class="psma-orbit-ring psma-orbit-ring--2"></div>
+          <div class="psma-orbit-ring psma-orbit-ring--3"></div>
+          <div class="psma-orbit-ring psma-orbit-ring--4"></div>
+          <div class="psma-orbit-dot psma-orbit-dot--inn">INN</div>
+          <div class="psma-orbit-dot psma-orbit-dot--gro">GRO</div>
+          <div class="psma-orbit-dot psma-orbit-dot--cor">COR</div>
+          <div class="psma-orbit-dot psma-orbit-dot--low">LOW</div>
+          <div class="psma-orbit-center"><span>BRIM<br>SMA's</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 2 — STRATEGY SPECTRUM (Cream)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--cream psma-spectrum">
+  <div class="psma-inner">
+    <div class="psma-fade">
+      <span class="psma-eyebrow">Strategy Suite</span>
+      <h2 class="psma-heading psma-heading--lg">Four Strategies. <em>One Objective.</em></h2>
+      <hr class="psma-hr">
+      <p class="psma-text">Proprietary, actively managed equity portfolios — each targeting a distinct risk-return profile. All managed in-house with direct equity ownership through Charles Schwab.</p>
+    </div>
+    <div class="psma-spectrum__wrap psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-spectrum__bar"></div>
+      <div class="psma-spectrum__labels">
+        <span>Lower Risk / Lower Return</span>
+        <span>Higher Risk / Higher Return</span>
+      </div>
+      <div class="psma-spectrum__cards">
+        <!-- Low Volatility -->
+        <div class="psma-spectrum__card psma-spectrum__card--lv">
+          <div class="psma-spectrum__card-name" style="color:var(--lv-color);">Low Volatility</div>
+          <div class="psma-spectrum__card-target" style="color:var(--lv-color);">Target: 7–12% Return</div>
+          <div class="psma-spectrum__card-desc">Defensive, economic-staple companies with low drawdowns, reliable dividends, and steady compounding through any market cycle.</div>
+          <div class="psma-spectrum__card-holdings">25–30 Holdings</div>
+          <a href="#showcase-lv" class="psma-spectrum__card-link" style="color:var(--lv-color);">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <!-- Core -->
+        <div class="psma-spectrum__card psma-spectrum__card--core">
+          <div class="psma-spectrum__card-name" style="color:var(--core-color);">Core</div>
+          <div class="psma-spectrum__card-target" style="color:var(--core-color);">Target: 12–15% Return</div>
+          <div class="psma-spectrum__card-desc">Industry-dominant large caps with unassailable brand power, massive recurring revenue, and decades of proven compounding.</div>
+          <div class="psma-spectrum__card-holdings">25–30 Holdings</div>
+          <a href="#showcase-core" class="psma-spectrum__card-link" style="color:var(--core-color);">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <!-- Growth -->
+        <div class="psma-spectrum__card psma-spectrum__card--gro">
+          <div class="psma-spectrum__card-name" style="color:var(--gro-color);">Growth</div>
+          <div class="psma-spectrum__card-target" style="color:var(--gro-color);">Target: 15–25% Return</div>
+          <div class="psma-spectrum__card-desc">Large-cap technology leaders in semiconductors, software infrastructure, payments, and streaming — with superior growth trajectories.</div>
+          <div class="psma-spectrum__card-holdings">20–25 Holdings</div>
+          <a href="#showcase-gro" class="psma-spectrum__card-link" style="color:var(--gro-color);">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <!-- Innovation -->
+        <div class="psma-spectrum__card psma-spectrum__card--inn">
+          <div class="psma-spectrum__card-name" style="color:var(--inn-color);">Innovation</div>
+          <div class="psma-spectrum__card-target" style="color:var(--inn-color);">Target: 25%+ Return</div>
+          <div class="psma-spectrum__card-desc">Highest-conviction positions in AI, cloud, fintech, and cybersecurity — companies reshaping industries with explosive growth.</div>
+          <div class="psma-spectrum__card-holdings">15–25 Holdings</div>
+          <a href="#showcase-inn" class="psma-spectrum__card-link" style="color:var(--inn-color);">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — INNOVATION SMA SHOWCASE (White)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--white" id="showcase-inn">
+  <div class="psma-inner">
+    <div class="psma-fade">
+      <span class="psma-eyebrow">Flagship Strategy</span>
+      <h2 class="psma-heading psma-heading--lg">Equity Innovation <em>SMA</em></h2>
+      <hr class="psma-hr">
+    </div>
+    <div class="psma-showcase__grid psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-showcase__visual"><canvas id="psma-inn-canvas"></canvas></div>
+      <div class="psma-showcase__content">
+        <div class="psma-showcase__badge" style="color:#D4A843;border-color:rgba(212,168,67,0.3);"><span class="psma-showcase__badge-dot" style="background:#D4A843;"></span>Live Since March 24, 2020</div>
+        <p class="psma-showcase__text">The Equity Innovation SMA targets the companies building the next generation of technology infrastructure &#8212; artificial intelligence platforms, cloud hyperscalers, advanced semiconductors, cybersecurity leaders, and high-growth SaaS businesses disrupting legacy industries.</p>
+        <p class="psma-showcase__text">This is our most aggressive strategy, designed for investors with a long time horizon and a high tolerance for volatility. Holdings typically exhibit 25%+ revenue growth, expanding margins, and dominant competitive positions in rapidly growing end markets.</p>
+        <div class="psma-showcase__stats">
+          <div class="psma-showcase__stat-header">
+            <div class="psma-showcase__stat-header-label"></div>
+            <div class="psma-showcase__stat-header-col" style="color:#D4A843;">Innovation</div>
+            <div class="psma-showcase__stat-header-col" style="color:#888;">S&amp;P 500</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Backtested + Live</span><span class="psma-showcase__stat-period-range">Jan 2008 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-inn-f" style="color:#D4A843;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-inn-fs">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Live</span><span class="psma-showcase__stat-period-range">Mar 2020 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-inn-l" style="color:#D4A843;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-inn-ls">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-footer">Compounded annual growth rate, net of 1.50% advisory fee</div>
+        </div>
+        <div class="psma-showcase__actions">
+          <a href="/proprietary-management/equity-innovation-sma" class="psma-btn psma-btn--strategy" style="background:#D4A843;border-color:#D4A843;">View Full Strategy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="/brochures/equity-innovation-sma-brochure" class="psma-btn psma-btn--outline" style="font-size:13px;border-color:var(--navy);color:var(--navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Fact Sheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — GROWTH SMA SHOWCASE (Cream)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--cream" id="showcase-gro">
+  <div class="psma-inner">
+    <div class="psma-fade">
+      <span class="psma-eyebrow">Large-Cap Leaders</span>
+      <h2 class="psma-heading psma-heading--lg">Equity Growth <em>SMA</em></h2>
+      <hr class="psma-hr">
+    </div>
+    <div class="psma-showcase__grid psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-showcase__visual"><canvas id="psma-gro-canvas"></canvas></div>
+      <div class="psma-showcase__content">
+        <div class="psma-showcase__badge" style="color:#5A8A3C;border-color:rgba(90,138,60,0.3);"><span class="psma-showcase__badge-dot" style="background:#5A8A3C;"></span>Live Since April 14, 2022</div>
+        <p class="psma-showcase__text">The Equity Growth SMA invests in large-cap technology leaders that dominate their industries &#8212; semiconductors powering the AI revolution, software infrastructure running the enterprise, streaming platforms reshaping media, and digital payments transforming commerce.</p>
+        <p class="psma-showcase__text">This strategy balances aggressive growth with established market leadership. Holdings are typically profitable, cash-generative companies with 15&#8211;25% revenue growth, deep competitive moats, and proven ability to compound shareholder value.</p>
+        <div class="psma-showcase__stats">
+          <div class="psma-showcase__stat-header">
+            <div class="psma-showcase__stat-header-label"></div>
+            <div class="psma-showcase__stat-header-col" style="color:#5A8A3C;">Growth</div>
+            <div class="psma-showcase__stat-header-col" style="color:#888;">S&amp;P 500</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Backtested + Live</span><span class="psma-showcase__stat-period-range">Jan 2008 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-gro-f" style="color:#5A8A3C;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-gro-fs">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Live</span><span class="psma-showcase__stat-period-range">Apr 2022 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-gro-l" style="color:#5A8A3C;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-gro-ls">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-footer">Compounded annual growth rate, net of 1.50% advisory fee</div>
+        </div>
+        <div class="psma-showcase__actions">
+          <a href="/proprietary-management/equity-growth-sma" class="psma-btn psma-btn--strategy" style="background:#5A8A3C;border-color:#5A8A3C;">View Full Strategy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="/brochures/equity-growth-sma-brochure" class="psma-btn psma-btn--outline" style="font-size:13px;border-color:var(--navy);color:var(--navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Fact Sheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 5 — CORE SMA SHOWCASE (White)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--white" id="showcase-core">
+  <div class="psma-inner">
+    <div class="psma-fade">
+      <span class="psma-eyebrow">Portfolio Foundation</span>
+      <h2 class="psma-heading psma-heading--lg">Equity Core <em>SMA</em></h2>
+      <hr class="psma-hr">
+    </div>
+    <div class="psma-showcase__grid psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-showcase__visual"><canvas id="psma-core-canvas"></canvas></div>
+      <div class="psma-showcase__content">
+        <div class="psma-showcase__badge" style="color:#5B7FB5;border-color:rgba(91,127,181,0.3);"><span class="psma-showcase__badge-dot" style="background:#5B7FB5;"></span>Live Since March 23, 2021</div>
+        <p class="psma-showcase__text">The Equity Core SMA anchors portfolios around the most dominant companies in the global economy &#8212; industry leaders with unassailable brand power, massive recurring revenue bases, and decades of proven compounding. Think Apple, Microsoft, Netflix, and their peers.</p>
+        <p class="psma-showcase__text">This is the foundation of a well-constructed equity allocation. Holdings are large-cap stalwarts with 12&#8211;15% revenue growth, deep profitability, and the ability to weather economic cycles while still delivering meaningful upside.</p>
+        <div class="psma-showcase__stats">
+          <div class="psma-showcase__stat-header">
+            <div class="psma-showcase__stat-header-label"></div>
+            <div class="psma-showcase__stat-header-col" style="color:#5B7FB5;">Core</div>
+            <div class="psma-showcase__stat-header-col" style="color:#888;">S&amp;P 500</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Backtested + Live</span><span class="psma-showcase__stat-period-range">Jan 2008 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-core-f" style="color:#5B7FB5;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-core-fs">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Live</span><span class="psma-showcase__stat-period-range">Mar 2021 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-core-l" style="color:#5B7FB5;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-core-ls">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-footer">Compounded annual growth rate, net of 1.50% advisory fee</div>
+        </div>
+        <div class="psma-showcase__actions">
+          <a href="/proprietary-management/equity-core-sma" class="psma-btn psma-btn--strategy" style="background:#5B7FB5;border-color:#5B7FB5;">View Full Strategy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="/brochures/equity-core-sma-brochure" class="psma-btn psma-btn--outline" style="font-size:13px;border-color:var(--navy);color:var(--navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Fact Sheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 6 — LOW VOLATILITY SMA SHOWCASE (Cream)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--cream" id="showcase-lv">
+  <div class="psma-inner">
+    <div class="psma-fade">
+      <span class="psma-eyebrow">Capital Preservation</span>
+      <h2 class="psma-heading psma-heading--lg">Equity Low Volatility <em>SMA</em></h2>
+      <hr class="psma-hr">
+    </div>
+    <div class="psma-showcase__grid psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-showcase__visual"><canvas id="psma-lv-canvas"></canvas></div>
+      <div class="psma-showcase__content">
+        <div class="psma-showcase__badge" style="color:#9B72B0;border-color:rgba(155,114,176,0.3);"><span class="psma-showcase__badge-dot" style="background:#9B72B0;"></span>Live Since April 16, 2021</div>
+        <p class="psma-showcase__text">The Equity Low Volatility SMA prioritizes capital preservation through defensive, economic-staple companies &#8212; McDonald&#39;s, Walmart, Johnson &amp; Johnson, and other businesses that generate steady revenue regardless of market conditions.</p>
+        <p class="psma-showcase__text">This is our most conservative equity strategy, designed for investors who want market participation with meaningfully less downside risk. Holdings typically exhibit 7&#8211;12% revenue growth, resilient margins through recessions, and reliable dividend histories.</p>
+        <div class="psma-showcase__stats">
+          <div class="psma-showcase__stat-header">
+            <div class="psma-showcase__stat-header-label"></div>
+            <div class="psma-showcase__stat-header-col" style="color:#9B72B0;">Low Vol</div>
+            <div class="psma-showcase__stat-header-col" style="color:#888;">S&amp;P 500</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Backtested + Live</span><span class="psma-showcase__stat-period-range">Jan 2008 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-lv-f" style="color:#9B72B0;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-lv-fs">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-row">
+            <div><span class="psma-showcase__stat-period-label">Live</span><span class="psma-showcase__stat-period-range">Apr 2021 &#8211; Present</span></div>
+            <div class="psma-showcase__stat-val" id="psma-lv-l" style="color:#9B72B0;">&#8212;</div>
+            <div class="psma-showcase__stat-val psma-showcase__stat-val--sp" id="psma-lv-ls">&#8212;</div>
+          </div>
+          <div class="psma-showcase__stat-footer">Compounded annual growth rate, net of 1.50% advisory fee</div>
+        </div>
+        <div class="psma-showcase__actions">
+          <a href="/proprietary-management/equity-low-volatility-sma" class="psma-btn psma-btn--strategy" style="background:#9B72B0;border-color:#9B72B0;">View Full Strategy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="/brochures/equity-low-volatility-sma-brochure" class="psma-btn psma-btn--outline" style="font-size:13px;border-color:var(--navy);color:var(--navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Fact Sheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 7 — COMPARATIVE CHART: Growth of $100K (Dark Navy)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--navy psma-chart-section" id="psma-chart-section">
+  <div class="psma-inner">
+    <div class="psma-fade">
+      <span class="psma-eyebrow">Performance Comparison</span>
+      <h2 class="psma-heading psma-heading--lg" style="color:var(--cream);">Growth of <em>$100,000</em></h2>
+      <hr class="psma-hr">
+      <p class="psma-text" style="color:rgba(240,236,225,0.6);">See how a $100,000 investment would have grown across each strategy since January 2008 — compared against the S&amp;P 500. Net of the 1.50% annual advisory fee.</p>
+    </div>
+    <div class="psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-chart-wrap">
+        <canvas id="psma-growth-chart"></canvas>
+      </div>
+      <div class="psma-chart-legend">
+        <div class="psma-chart-legend__item"><div class="psma-chart-legend__dot" style="background:#D4A843;"></div> Innovation</div>
+        <div class="psma-chart-legend__item"><div class="psma-chart-legend__dot" style="background:#5A8A3C;"></div> Growth</div>
+        <div class="psma-chart-legend__item"><div class="psma-chart-legend__dot" style="background:#5B7FB5;"></div> Core</div>
+        <div class="psma-chart-legend__item"><div class="psma-chart-legend__dot" style="background:#9B72B0;"></div> Low Volatility</div>
+        <div class="psma-chart-legend__item"><div class="psma-chart-legend__dot" style="background:rgba(240,236,225,0.35);"></div> S&amp;P 500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 8 — EXPLORE, COMPARE, DECIDE (White)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--white">
+  <div class="psma-inner">
+    <div class="psma-fade" style="text-align:center;">
+      <span class="psma-eyebrow" style="justify-content:center;">Go Deeper</span>
+      <h2 class="psma-heading psma-heading--lg">Explore, Compare, <em>Decide</em></h2>
+      <hr class="psma-hr" style="margin:0 auto 16px;">
+      <p class="psma-text" style="text-align:center;margin:0 auto 0;">Interactive tools to help you evaluate our strategies and model your financial future.</p>
+    </div>
+    <div class="psma-explore-grid psma-fade" style="transition-delay:0.1s;">
+      <div class="psma-explore-card">
+        <div class="psma-explore-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <div class="psma-explore-card__title">Strategy Backtester</div>
+        <div class="psma-explore-card__desc">Test custom allocations across all four strategies with real historical returns dating back to 2008.</div>
+        <a href="/advisors/strategy-backtester" class="psma-explore-card__link">Launch Tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="psma-explore-card">
+        <div class="psma-explore-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="psma-explore-card__title">Wealth Forecaster</div>
+        <div class="psma-explore-card__desc">Found your allocation? Model expected returns and project your wealth trajectory forward.</div>
+        <a href="/advisors/wealth-forecaster" class="psma-explore-card__link">Launch Tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="psma-explore-card">
+        <div class="psma-explore-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <div class="psma-explore-card__title">SMA Brochure</div>
+        <div class="psma-explore-card__desc">Download our comprehensive strategy overview with performance highlights and methodology.</div>
+        <a href="/brochures/proprietary-sma-brochure" class="psma-explore-card__link">View Brochure <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="psma-cta psma-fade" style="transition-delay:0.2s;">
+      <h2 class="psma-heading psma-heading--md">Ready to Build <em>Your Portfolio?</em></h2>
+      <p class="psma-text">Schedule a complimentary 30-minute call with Chris Passarelli, Founder &amp; Portfolio Manager. No commitment, no pressure &#8212; just a conversation about your goals.</p>
+      <div class="psma-cta__btns">
+        <a href="https://calendly.com/chrispassarelli" class="psma-cta__btn psma-cta__btn--gold">Schedule a Call</a>
+        <a href="/about/contact" class="psma-cta__btn psma-cta__btn--outline">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 9 — DISCLOSURES (Cream)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="psma-section psma-section--cream psma-disclosures">
+  <div class="psma-inner">
+    <div class="psma-disclosures__text">
+      <p>Bull Run Investment Management, LLC ("BRIM") is a fee-only Registered Investment Adviser headquartered in McLean, Virginia (CRD #306763). Registration does not imply a certain level of skill or training. Past performance is not indicative of future results. Investing involves risk, including the potential loss of principal.</p>
+      <p>Performance data shown on this page is computed from daily gross returns. "Net" returns reflect the deduction of a 1.50% annual model advisory fee applied using a quarterly average-daily-balance methodology. Actual client returns will differ based on the timing of capital flows, specific fee arrangements, and individual account circumstances.</p>
+      <p>Backtested performance (prior to each strategy's live inception date) is hypothetical, was not actually achieved, and has inherent limitations including the benefit of hindsight. Backtested results do not represent actual trading and may not reflect the impact of material economic and market factors.</p>
+      <p>S&amp;P 500 returns are shown for comparison purposes only and are not fee-adjusted. This page is for informational purposes only and does not constitute investment advice. For additional information, refer to our <a href="https://adviserinfo.sec.gov/firm/summary/306763">Form ADV</a>.</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- end .psma-page -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     JAVASCRIPT — All animations + data fetching
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════
+   SHARED CONFIG
+   ══════════════════════════════════════════════════════════════ */
+var SID = '1y_8t30wktZ_mPrFxbG9qFhJbOEq6oNTJjnFf6t9eR0w';
+var CALC_URL = 'https://docs.google.com/spreadsheets/d/'+SID+'/gviz/tq?tqx=out:csv&sheet=Calculations';
+var NET_URL = 'https://docs.google.com/spreadsheets/d/'+SID+'/export?format=csv&gid=1669498751';
+var GROSS_URL = 'https://docs.google.com/spreadsheets/d/'+SID+'/export?format=csv&gid=211372480';
+
+/* Column indices in Daily_Returns_Gross: A=Date(0), B=Inn(1), C=Gro(2), D=Core(3), E=LV(4), F=SP500(5) */
+/* Calculation sheet indices: Inn=1, Gro=3, Core=5, LV=7, SP=8 */
+var STRATEGIES = {
+  inn:  { calcIdx: 1, liveDate: '2020-03-24', dailyCol: 1 },
+  gro:  { calcIdx: 3, liveDate: '2022-04-14', dailyCol: 2 },
+  core: { calcIdx: 5, liveDate: '2021-03-23', dailyCol: 3 },
+  lv:   { calcIdx: 7, liveDate: '2021-04-16', dailyCol: 4 }
+};
+var SP_CALC_IDX = 8;
+
+/* ══════════════════════════════════════════════════════════════
+   DATA FETCHING
+   ══════════════════════════════════════════════════════════════ */
+function animVal(id, v) {
+  var el = document.getElementById(id);
+  if (!el || v === null || isNaN(v)) return;
+  el.textContent = (v * 100).toFixed(2) + '%';
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(8px)';
+  el.style.transition = 'opacity 0.6s, transform 0.6s';
+  setTimeout(function(){ el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 100);
+}
+
+function fetchCAGRs() {
+  fetch(CALC_URL).then(function(r){ return r.text(); }).then(function(csv){
+    var lines = csv.split('\n'), s = {};
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i].replace(/"/g,'').trim();
+      if (!l) continue;
+      var c = l.split(','), lb = c[0].trim();
+      if (lb) s[lb] = c.slice(1).map(function(v){ var x = v.replace('%','').trim(); return x !== '' ? parseFloat(x)/100 : null; });
+    }
+    var f = s['CAGR (Full)'], v = s['CAGR (Live)'];
+    if (f) {
+      for (var key in STRATEGIES) {
+        var st = STRATEGIES[key];
+        animVal('psma-'+key+'-f', f[st.calcIdx]);
+        animVal('psma-'+key+'-fs', f[SP_CALC_IDX]);
+      }
+    }
+    if (v) {
+      for (var key2 in STRATEGIES) {
+        animVal('psma-'+key2+'-l', v[STRATEGIES[key2].calcIdx]);
+      }
+    }
+  }).catch(function(e){ console.error('BRIM CAGR:', e); });
+
+  /* Compute S&P Live CAGR for each strategy's live period */
+  fetch(GROSS_URL).then(function(r){ return r.text(); }).then(function(csv){
+    var lines = csv.split('\n');
+    for (var key in STRATEGIES) {
+      var st = STRATEGIES[key];
+      var si = -1, cumul = 1, startD = '', endD = '';
+      for (var i = 2; i < lines.length; i++) {
+        var cols = lines[i].split(',');
+        if (cols.length < 6) continue;
+        var d = cols[0].trim();
+        if (!d) continue;
+        if (si < 0 && d >= st.liveDate) { si = i; startD = d; continue; }
+        if (si >= 0) {
+          var sp = parseFloat(cols[5].replace('%','').trim()) / 100;
+          if (!isNaN(sp)) cumul *= (1 + sp);
+          endD = d;
+        }
+      }
+      if (startD && endD) {
+        var yrs = ((new Date(endD)) - (new Date(startD))) / (365.25 * 864e5);
+        var cagr = Math.pow(cumul, 1/yrs) - 1;
+        animVal('psma-'+key+'-ls', cagr);
+      }
+    }
+  }).catch(function(e){ console.error('BRIM SP Live:', e); });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GROWTH OF $100K CHART
+   ══════════════════════════════════════════════════════════════ */
+function initGrowthChart() {
+  var canvas = document.getElementById('psma-growth-chart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, dpr;
+  var chartData = null;
+
+  function resize() {
+    var r = canvas.parentElement.getBoundingClientRect();
+    dpr = window.devicePixelRatio || 1;
+    W = r.width; H = r.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', function(){ resize(); if (chartData) drawChart(); });
+
+  /* Fetch net returns CSV for chart */
+  fetch(NET_URL).then(function(r){ return r.text(); }).then(function(csv){
+    var lines = csv.split('\n');
+    var dates = [], inn = [], gro = [], core = [], lv = [], sp = [];
+    /* Cumulative growth: start at $100K */
+    var cInn = 100000, cGro = 100000, cCore = 100000, cLv = 100000, cSp = 100000;
+    for (var i = 2; i < lines.length; i++) {
+      var cols = lines[i].split(',');
+      if (cols.length < 6) continue;
+      var d = cols[0].trim();
+      if (!d) continue;
+      var rInn = parseFloat(cols[1].replace('%','').trim()) / 100;
+      var rGro = parseFloat(cols[2].replace('%','').trim()) / 100;
+      var rCore = parseFloat(cols[3].replace('%','').trim()) / 100;
+      var rLv = parseFloat(cols[4].replace('%','').trim()) / 100;
+      var rSp = parseFloat(cols[5].replace('%','').trim()) / 100;
+      if (!isNaN(rInn)) cInn *= (1 + rInn);
+      if (!isNaN(rGro)) cGro *= (1 + rGro);
+      if (!isNaN(rCore)) cCore *= (1 + rCore);
+      if (!isNaN(rLv)) cLv *= (1 + rLv);
+      if (!isNaN(rSp)) cSp *= (1 + rSp);
+      /* Sample every ~5 rows for performance */
+      if (i % 5 === 0 || i === lines.length - 1) {
+        dates.push(d);
+        inn.push(cInn); gro.push(cGro); core.push(cCore); lv.push(cLv); sp.push(cSp);
+      }
+    }
+    chartData = { dates: dates, series: [
+      { data: inn, color: '#D4A843', label: 'Innovation' },
+      { data: gro, color: '#5A8A3C', label: 'Growth' },
+      { data: core, color: '#5B7FB5', label: 'Core' },
+      { data: lv, color: '#9B72B0', label: 'Low Vol' },
+      { data: sp, color: 'rgba(240,236,225,0.35)', label: 'S&P 500' }
+    ]};
+    drawChart();
+  }).catch(function(e){ console.error('BRIM Chart:', e); });
+
+  function drawChart() {
+    if (!chartData || W <= 0) return;
+    ctx.clearRect(0, 0, W, H);
+    var pad = { top: 40, right: 40, bottom: 50, left: 80 };
+    var cw = W - pad.left - pad.right;
+    var ch = H - pad.top - pad.bottom;
+    var n = chartData.dates.length;
+    if (n < 2) return;
+
+    /* Find min/max across all series */
+    var maxV = 100000, minV = 100000;
+    chartData.series.forEach(function(s){ s.data.forEach(function(v){ if (v > maxV) maxV = v; if (v < minV) minV = v; }); });
+    /* Use log scale */
+    var logMin = Math.log10(Math.max(minV * 0.8, 10000));
+    var logMax = Math.log10(maxV * 1.15);
+
+    function yPos(v) {
+      var lv = Math.log10(Math.max(v, 1));
+      return pad.top + ch * (1 - (lv - logMin) / (logMax - logMin));
+    }
+    function xPos(i) { return pad.left + (i / (n - 1)) * cw; }
+
+    /* Grid lines */
+    var gridVals = [50000, 100000, 200000, 500000, 1000000, 2000000, 5000000, 10000000, 20000000, 50000000, 100000000];
+    ctx.font = '500 10px "DM Sans", sans-serif';
+    ctx.textAlign = 'right';
+    gridVals.forEach(function(gv) {
+      var y = yPos(gv);
+      if (y < pad.top - 5 || y > pad.top + ch + 5) return;
+      ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cw, y);
+      ctx.strokeStyle = 'rgba(240,236,225,0.06)'; ctx.lineWidth = 1; ctx.stroke();
+      var label = gv >= 1000000 ? '$' + (gv / 1000000).toFixed(0) + 'M' : '$' + (gv / 1000).toFixed(0) + 'K';
+      ctx.fillStyle = 'rgba(240,236,225,0.3)';
+      ctx.fillText(label, pad.left - 10, y + 4);
+    });
+
+    /* Date labels */
+    ctx.textAlign = 'center';
+    var yearLabels = {};
+    chartData.dates.forEach(function(d, i) {
+      var yr = d.substring(0, 4);
+      if (!yearLabels[yr]) yearLabels[yr] = i;
+    });
+    for (var yr in yearLabels) {
+      var xi = xPos(yearLabels[yr]);
+      ctx.fillStyle = 'rgba(240,236,225,0.25)';
+      ctx.font = '500 10px "DM Sans", sans-serif';
+      ctx.fillText(yr, xi, pad.top + ch + 24);
+    }
+
+    /* Draw lines — S&P first (background), then strategies */
+    var order = [4, 3, 2, 1, 0]; /* sp, lv, core, gro, inn */
+    order.forEach(function(si) {
+      var s = chartData.series[si];
+      ctx.beginPath();
+      for (var j = 0; j < n; j++) {
+        var x = xPos(j), y = yPos(s.data[j]);
+        if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth = si === 4 ? 1.5 : 2;
+      ctx.stroke();
+
+      /* End label */
+      var lastY = yPos(s.data[n - 1]);
+      var lastX = xPos(n - 1);
+      var endVal = s.data[n - 1];
+      var label2 = endVal >= 1000000 ? '$' + (endVal / 1000000).toFixed(1) + 'M' : '$' + (endVal / 1000).toFixed(0) + 'K';
+      ctx.font = '600 11px "DM Sans", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = s.color;
+      ctx.fillText(label2, lastX + 8, lastY + 4);
+    });
+
+    /* Starting line */
+    ctx.beginPath();
+    ctx.setLineDash([4, 4]);
+    var startY = yPos(100000);
+    ctx.moveTo(pad.left, startY); ctx.lineTo(pad.left + cw, startY);
+    ctx.strokeStyle = 'rgba(240,236,225,0.15)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = '500 9px "DM Sans", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(240,236,225,0.35)';
+    ctx.fillText('$100K Start', pad.left + 4, startY - 8);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INNOVATION CANVAS ANIMATION
+   ══════════════════════════════════════════════════════════════ */
+function initInnAnim() {
+  var canvas = document.getElementById('psma-inn-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d'), W, H, dpr;
+  function resize() {
+    var r = canvas.parentElement.getBoundingClientRect();
+    dpr = window.devicePixelRatio || 1; W = r.width; H = r.height;
+    if (W <= 0 || H <= 0) return;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize();
+  var INN = '#D4A843';
+  var nodeLabels = ['AI','GPU','Cloud','SaaS','Cyber','Edge','ML','Data','API','LLM','Infra','IoT','Chips','Auto','Fin','Bio','Quant','Net'];
+  var activeNodes = [0,1,2,3,4,6,7,9,12];
+  var nodes = [], streams = [], NUM_STREAMS = 60;
+  var metrics = [{label:'25%+',sub:'Rev Growth',x:0.12,y:0.15,delay:0.3},{label:'15-25',sub:'Holdings',x:0.88,y:0.12,delay:0.5},{label:'$250K',sub:'Minimum',x:0.85,y:0.88,delay:0.7}];
+  var startTime = 0, started = false, mouseX = -1, mouseY = -1;
+  canvas.addEventListener('mousemove', function(e){ var r = canvas.getBoundingClientRect(); mouseX = e.clientX-r.left; mouseY = e.clientY-r.top; });
+  canvas.addEventListener('mouseleave', function(){ mouseX = mouseY = -1; });
+  function buildNodes(){
+    nodes = []; var cols=6,rows=3,sx=W/(cols+1),sy=H*0.55/(rows+1),oy=H*0.18,idx=0;
+    for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
+      var xo=(r%2)*sx*0.5;
+      nodes.push({x:sx*(c+1)+xo,y:oy+sy*(r+1),label:nodeLabels[idx%nodeLabels.length],active:activeNodes.indexOf(idx)>=0,pulse:Math.random()*Math.PI*2,size:0});
+      idx++;
+    }
+  }
+  function buildStreams(){
+    streams=[];for(var i=0;i<NUM_STREAMS;i++) streams.push({x:Math.random()*W,y:H+Math.random()*H,speed:0.3+Math.random()*1.2,size:1+Math.random()*2,opacity:0.1+Math.random()*0.3,drift:(Math.random()-0.5)*0.3});
+  }
+  buildNodes(); buildStreams();
+  window.addEventListener('resize',function(){setTimeout(function(){resize();if(W>0&&H>0){buildNodes();buildStreams();}},100);});
+  function getConns(){var c=[];for(var i=0;i<nodes.length;i++)for(var j=i+1;j<nodes.length;j++){var dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<W*0.25)c.push([i,j,d]);}return c;}
+  var obs = new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&!started){started=true;startTime=Date.now();}});},{threshold:0.15});
+  obs.observe(canvas.parentElement);
+  function animate(){
+    requestAnimationFrame(animate); if(!started||W<=0||H<=0) return;
+    var el=(Date.now()-startTime)/1000,intro=Math.min(el/2,1),ea=1-Math.pow(1-intro,4);
+    ctx.clearRect(0,0,W,H);
+    streams.forEach(function(s){s.y-=s.speed*ea;s.x+=s.drift;if(s.y<-20){s.y=H+10;s.x=Math.random()*W;}var fi=Math.min(1,Math.max(0,(H-s.y)/(H*0.3))),fo=Math.min(1,s.y/(H*0.2)),a=s.opacity*ea*fi*fo;ctx.beginPath();ctx.arc(s.x,s.y,s.size,0,Math.PI*2);ctx.fillStyle='rgba(212,168,67,'+a+')';ctx.fill();ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.drift*8,s.y+s.speed*12);ctx.strokeStyle='rgba(212,168,67,'+(a*0.3)+')';ctx.lineWidth=s.size*0.5;ctx.stroke();});
+    var conns=getConns();conns.forEach(function(c){var a=nodes[c[0]],b=nodes[c[1]],md=W*0.25,st=1-(c[2]/md),ba=a.active&&b.active,al=(ba?0.2:0.06)*ea*st;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba(2,19,31,'+al+')';ctx.lineWidth=ba?1.5:0.5;ctx.stroke();if(ba&&ea>0.5){var pt=((el*0.4+c[0]*0.1)%1),px=a.x+(b.x-a.x)*pt,py=a.y+(b.y-a.y)*pt;ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='rgba(212,168,67,'+(0.5*ea)+')';ctx.fill();}});
+    nodes.forEach(function(nd,idx){var dl=idx*0.04,ne=Math.min(1,Math.max(0,(el-dl)/0.8));ne=1-Math.pow(1-ne,3);nd.size=ne;var pl=1+Math.sin(el*2+nd.pulse)*0.08,br=nd.active?22:14,r=br*ne*pl;var mdi=(mouseX>=0)?Math.sqrt((nd.x-mouseX)*(nd.x-mouseX)+(nd.y-mouseY)*(nd.y-mouseY)):999,mg=Math.max(0,1-mdi/100);if(nd.active){ctx.beginPath();ctx.arc(nd.x,nd.y,r+8+mg*12,0,Math.PI*2);ctx.fillStyle='rgba(212,168,67,'+((0.06+mg*0.1)*ne)+')';ctx.fill();ctx.beginPath();ctx.arc(nd.x,nd.y,r,0,Math.PI*2);ctx.fillStyle='#FFF';ctx.fill();ctx.strokeStyle=INN;ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.arc(nd.x,nd.y,r*0.35,0,Math.PI*2);ctx.fillStyle=INN;ctx.fill();}else{ctx.beginPath();ctx.arc(nd.x,nd.y,r,0,Math.PI*2);ctx.fillStyle='rgba(2,19,31,'+(0.06*ne)+')';ctx.fill();ctx.strokeStyle='rgba(2,19,31,'+(0.12*ne)+')';ctx.lineWidth=1;ctx.stroke();}if(ne>0.5){ctx.font=(nd.active?'600':'400')+' '+(nd.active?'10':'9')+'px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle=nd.active?'rgba(2,19,31,'+(0.8*ne)+')':'rgba(2,19,31,'+(0.3*ne)+')';ctx.fillText(nd.label,nd.x,nd.y+r+14);}});
+    if(el>1.0){var cp=Math.min(1,(el-1.0)/2.0);cp=1-Math.pow(1-cp,3);var csx=W*0.08,cex=W*0.92,cy=H*0.82,ch=H*0.28;ctx.beginPath();ctx.moveTo(csx,cy);ctx.lineTo(csx+(cex-csx)*cp,cy);ctx.strokeStyle='rgba(2,19,31,0.08)';ctx.lineWidth=1;ctx.stroke();ctx.beginPath();var pts=Math.floor(100*cp);for(var p=0;p<=pts;p++){var fr=p/100,cx2=csx+fr*(cex-csx),ev=(Math.exp(3.5*fr)-1)/(Math.exp(3.5)-1),yy=cy-ev*ch;if(p===0)ctx.moveTo(cx2,yy);else ctx.lineTo(cx2,yy);}ctx.strokeStyle=INN;ctx.lineWidth=2.5;ctx.stroke();if(cp>0.3){ctx.beginPath();for(var p2=0;p2<=pts;p2++){var fr2=p2/100,cx3=csx+fr2*(cex-csx),ev2=(Math.exp(3.5*fr2)-1)/(Math.exp(3.5)-1),yy2=cy-ev2*ch;if(p2===0)ctx.moveTo(cx3,yy2);else ctx.lineTo(cx3,yy2);}ctx.lineTo(csx+(pts/100)*(cex-csx),cy);ctx.lineTo(csx,cy);ctx.closePath();var grd=ctx.createLinearGradient(0,cy-ch,0,cy);grd.addColorStop(0,'rgba(212,168,67,0.12)');grd.addColorStop(1,'rgba(212,168,67,0)');ctx.fillStyle=grd;ctx.fill();}if(cp>0.1){var tf=pts/100,tx=csx+tf*(cex-csx),te=(Math.exp(3.5*tf)-1)/(Math.exp(3.5)-1),ty=cy-te*ch;ctx.beginPath();ctx.arc(tx,ty,5,0,Math.PI*2);ctx.fillStyle=INN;ctx.fill();ctx.beginPath();ctx.arc(tx,ty,10+Math.sin(el*3)*3,0,Math.PI*2);ctx.strokeStyle='rgba(212,168,67,0.3)';ctx.lineWidth=1;ctx.stroke();}}
+    metrics.forEach(function(m){var me=Math.min(1,Math.max(0,(el-m.delay-1.5)/0.8));me=1-Math.pow(1-me,3);if(me<=0)return;var mx2=m.x*W,my2=m.y*H+Math.sin(el*1.2+m.delay*5)*4;ctx.font='700 18px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(212,168,67,'+(0.85*me)+')';ctx.fillText(m.label,mx2,my2);ctx.font='400 9px "DM Sans",sans-serif';ctx.fillStyle='rgba(2,19,31,'+(0.35*me)+')';ctx.fillText(m.sub,mx2,my2+14);});
+    var la=Math.min(1,Math.max(0,(el-3)/1.0));la=1-Math.pow(1-la,4);if(la>0){ctx.font='500 9px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.18*la)+')';ctx.fillText('ACTIVELY MANAGED  \u00B7  25%+ REVENUE GROWTH  \u00B7  15-25 HOLDINGS',W*0.5,H-14);}
+  }
+  animate();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GROWTH SMA CANVAS ANIMATION
+   ══════════════════════════════════════════════════════════════ */
+function initGroAnim() {
+  var canvas = document.getElementById('psma-gro-canvas'); if (!canvas) return;
+  var ctx = canvas.getContext('2d'), W, H, dpr;
+  function resize(){var r=canvas.parentElement.getBoundingClientRect();dpr=window.devicePixelRatio||1;W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+  resize();
+  var GR='#5A8A3C';
+  var towers=[],tLabels=['SEMI','STREAM','PAY','SOFT','INFRA','MEDIA','CHIP','ENTER','PLAT','SAAS'],tHeights=[0.85,0.7,0.65,0.78,0.6,0.55,0.9,0.72,0.68,0.58];
+  var sats=[],satLabels=['Semis','Streaming','Payments','Software','Cloud','Enterprise'];
+  var flows=[],mouseX=-1,mouseY=-1;
+  canvas.addEventListener('mousemove',function(e){var r=canvas.getBoundingClientRect();mouseX=e.clientX-r.left;mouseY=e.clientY-r.top;});
+  canvas.addEventListener('mouseleave',function(){mouseX=mouseY=-1;});
+  function buildAll(){resize();towers=[];var n=tLabels.length,tw=Math.min(40,W*0.065),g=Math.min(16,W*0.02),tot=n*tw+(n-1)*g,sx=(W-tot)/2,by=H*0.78,mh=H*0.45;for(var i=0;i<n;i++)towers.push({x:sx+i*(tw+g),y:by,w:tw,maxH:mh*tHeights[i],label:tLabels[i],currentH:0,delay:0.3+i*0.12});sats=[];for(var s=0;s<satLabels.length;s++){var a=(s/satLabels.length)*Math.PI*2-Math.PI/2;sats.push({angle:a,radius:Math.min(W,H)*0.18,label:satLabels[s],size:16+Math.random()*6,phase:Math.random()*Math.PI*2,orbitSpeed:0.15+Math.random()*0.1});}flows=[];for(var f=0;f<25;f++)flows.push({x:-Math.random()*W*0.5,y:H*0.12+Math.random()*H*0.35,speed:0.8+Math.random()*2,len:30+Math.random()*60,opacity:0.08+Math.random()*0.15,width:1+Math.random()*1.5});}
+  buildAll();window.addEventListener('resize',function(){setTimeout(buildAll,60);});
+  var startTime=0,started=false;
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&!started){started=true;startTime=Date.now();}});},{threshold:0.15});
+  obs.observe(canvas.parentElement);
+  function ease(t){return 1-Math.pow(1-Math.min(t,1),4);}
+  function animate(){
+    requestAnimationFrame(animate);if(!started)return;
+    var el=(Date.now()-startTime)/1000,intro=ease(el/2);
+    ctx.clearRect(0,0,W,H);
+    flows.forEach(function(f){f.x+=f.speed*intro;if(f.x>W+f.len){f.x=-f.len;f.y=H*0.12+Math.random()*H*0.35;}var a=f.opacity*intro;var gd=ctx.createLinearGradient(f.x,0,f.x+f.len,0);gd.addColorStop(0,'rgba(90,138,60,0)');gd.addColorStop(0.3,'rgba(90,138,60,'+a+')');gd.addColorStop(0.7,'rgba(90,138,60,'+a+')');gd.addColorStop(1,'rgba(90,138,60,0)');ctx.beginPath();ctx.moveTo(f.x,f.y);ctx.lineTo(f.x+f.len,f.y);ctx.strokeStyle=gd;ctx.lineWidth=f.width;ctx.stroke();});
+    var hx=W*0.5,hy=H*0.28,hi=ease((el-0.3)/1.0);
+    if(hi>0){for(var ri=3;ri>=1;ri--){var rr=Math.min(W,H)*0.06*ri*hi;ctx.beginPath();ctx.arc(hx,hy,rr,0,Math.PI*2);ctx.strokeStyle='rgba(90,138,60,'+(0.06/ri*hi)+')';ctx.lineWidth=1;ctx.stroke();}var hr=Math.min(W,H)*0.045*hi;ctx.beginPath();ctx.arc(hx,hy,hr,0,Math.PI*2);ctx.fillStyle='#FFF';ctx.fill();ctx.strokeStyle='rgba(90,138,60,'+(0.5*hi)+')';ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.arc(hx,hy,hr*0.5,0,Math.PI*2);ctx.fillStyle=GR;ctx.globalAlpha=0.2*hi;ctx.fill();ctx.globalAlpha=1;ctx.font='600 '+Math.max(8,hr*0.5)+'px "DM Sans",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(2,19,31,'+(0.6*hi)+')';ctx.fillText('GROWTH',hx,hy);}
+    sats.forEach(function(sat,si){var si2=ease((el-0.8-si*0.15)/0.8);if(si2<=0)return;var a=sat.angle+el*sat.orbitSpeed,sx2=hx+Math.cos(a)*sat.radius*si2,sy=hy+Math.sin(a)*sat.radius*si2*0.6;ctx.beginPath();ctx.moveTo(sx2,sy);ctx.lineTo(hx,hy);ctx.strokeStyle='rgba(90,138,60,'+(0.08*si2)+')';ctx.lineWidth=0.5;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);var md=(mouseX>=0)?Math.sqrt((sx2-mouseX)*(sx2-mouseX)+(sy-mouseY)*(sy-mouseY)):999,gw=Math.max(0,1-md/70),sr=sat.size*si2;if(gw>0){ctx.beginPath();ctx.arc(sx2,sy,sr+6,0,Math.PI*2);ctx.fillStyle='rgba(90,138,60,'+(0.08*gw)+')';ctx.fill();}ctx.beginPath();ctx.arc(sx2,sy,sr,0,Math.PI*2);ctx.fillStyle='#FFF';ctx.fill();ctx.strokeStyle='rgba(90,138,60,'+(0.35+gw*0.3)+')';ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.arc(sx2,sy,3,0,Math.PI*2);ctx.fillStyle=GR;ctx.globalAlpha=0.4*si2;ctx.fill();ctx.globalAlpha=1;ctx.font='500 9px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.5*si2)+')';ctx.fillText(sat.label,sx2,sy+sr+12);});
+    towers.forEach(function(tw2,ti){var ti2=ease((el-tw2.delay)/1.2);if(ti2<=0)return;tw2.currentH=tw2.maxH*ti2;var tx=tw2.x,ty=tw2.y-tw2.currentH,twd=tw2.w,th=tw2.currentH;var tg=ctx.createLinearGradient(tx,ty,tx,tw2.y);tg.addColorStop(0,'rgba(90,138,60,'+(0.3*ti2)+')');tg.addColorStop(1,'rgba(90,138,60,'+(0.08*ti2)+')');ctx.fillStyle=tg;ctx.beginPath();ctx.moveTo(tx+2,tw2.y);ctx.lineTo(tx+2,ty+2);ctx.quadraticCurveTo(tx+2,ty,tx+4,ty);ctx.lineTo(tx+twd-4,ty);ctx.quadraticCurveTo(tx+twd-2,ty,tx+twd-2,ty+2);ctx.lineTo(tx+twd-2,tw2.y);ctx.closePath();ctx.fill();ctx.fillStyle=GR;ctx.globalAlpha=0.5*ti2;ctx.fillRect(tx+2,ty,twd-4,2);ctx.globalAlpha=1;if(ti2>0.5){var wr=Math.floor(th/16);for(var w=0;w<Math.min(wr,8);w++){var wy=ty+10+w*16,wa=0.15*ti2*(1-w/wr);ctx.fillStyle='rgba(90,138,60,'+wa+')';ctx.fillRect(tx+twd*0.25,wy,twd*0.15,3);ctx.fillRect(tx+twd*0.55,wy,twd*0.15,3);}}var tmx=tx+twd/2,tmd=(mouseX>=0)?Math.abs(mouseX-tmx):999;if(tmd<twd){ctx.fillStyle='rgba(90,138,60,0.05)';ctx.fillRect(tx,ty,twd,th);}if(ti2>0.7){ctx.font='600 8px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.4*ti2)+')';ctx.fillText(tw2.label,tx+twd/2,tw2.y+14);}});
+    var bli=ease((el-0.5)/0.8);if(bli>0&&towers.length>0){ctx.beginPath();ctx.moveTo(W*0.05,towers[0].y);ctx.lineTo(W*0.95,towers[0].y);ctx.strokeStyle='rgba(2,19,31,'+(0.06*bli)+')';ctx.lineWidth=1;ctx.stroke();}
+    var mi=ease((el-2.5)/1.0);if(mi>0){[{label:'$1T+',sub:'Market Cap',x:0.08,y:0.08},{label:'15-25%',sub:'Rev Growth',x:0.92,y:0.06},{label:'Profitable',sub:'Cash Generative',x:0.08,y:0.55}].forEach(function(mc,i){var d=ease((el-2.5-i*0.2)/0.8);if(d<=0)return;var mx2=mc.x*W,my2=mc.y*H+Math.sin(el*1.0+i*2)*3;ctx.font='700 16px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(90,138,60,'+(0.7*d)+')';ctx.fillText(mc.label,mx2,my2);ctx.font='400 9px "DM Sans",sans-serif';ctx.fillStyle='rgba(2,19,31,'+(0.3*d)+')';ctx.fillText(mc.sub,mx2,my2+13);});}
+    var la=ease((el-3)/1.0);if(la>0){ctx.font='500 9px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.18*la)+')';ctx.fillText('LARGE-CAP LEADERS  \u00B7  15-25% REVENUE GROWTH  \u00B7  20-25 HOLDINGS',W*0.5,H-14);}
+  }
+  animate();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CORE SMA CANVAS ANIMATION
+   ══════════════════════════════════════════════════════════════ */
+function initCoreAnim() {
+  var canvas = document.getElementById('psma-core-canvas'); if (!canvas) return;
+  var ctx = canvas.getContext('2d'), W, H, dpr;
+  function resize(){var r=canvas.parentElement.getBoundingClientRect();dpr=window.devicePixelRatio||1;W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+  resize();
+  var CB='#5B7FB5';
+  var gears=[],gLabels=['TECH','MEDIA','HEALTH','FINANCE','RETAIL','COMM'];
+  var pillars=[],pLabels=['Apple','MSFT','NFLX','GOOG','AMZN','V','MA','UNH'],pH=[0.9,0.88,0.72,0.82,0.78,0.6,0.58,0.65];
+  var particles=[],mouseX=-1,mouseY=-1;
+  canvas.addEventListener('mousemove',function(e){var r=canvas.getBoundingClientRect();mouseX=e.clientX-r.left;mouseY=e.clientY-r.top;});
+  canvas.addEventListener('mouseleave',function(){mouseX=mouseY=-1;});
+  function buildAll(){resize();gears=[];var gp=[{x:0.3,y:0.3,r:0.12,t:10,s:0.3,d:1},{x:0.52,y:0.22,r:0.08,t:7,s:-0.45,d:-1},{x:0.7,y:0.32,r:0.1,t:9,s:0.35,d:1},{x:0.42,y:0.45,r:0.07,t:6,s:-0.5,d:-1},{x:0.18,y:0.48,r:0.06,t:5,s:0.55,d:1},{x:0.62,y:0.48,r:0.065,t:6,s:-0.48,d:-1}];for(var i=0;i<gp.length;i++){var g=gp[i];gears.push({x:g.x*W,y:g.y*H,radius:Math.min(W,H)*g.r,teeth:g.t,speed:g.s,dir:g.d,label:gLabels[i],angle:0,delay:0.2+i*0.15});}pillars=[];var n=pLabels.length,pw=Math.min(32,W*0.055),pg=Math.min(12,W*0.015),tot=n*pw+(n-1)*pg,sx=(W-tot)/2,by=H*0.88,mh=H*0.22;for(var p=0;p<n;p++)pillars.push({x:sx+p*(pw+pg),y:by,w:pw,maxH:mh*pH[p],label:pLabels[p],currentH:0,delay:1.5+p*0.1});particles=[];for(var pp=0;pp<30;pp++)particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.15,vy:(Math.random()-0.5)*0.15,size:1+Math.random()*1.5,opacity:0.08+Math.random()*0.12});}
+  buildAll();window.addEventListener('resize',function(){setTimeout(buildAll,60);});
+  var startTime=0,started=false;
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&!started){started=true;startTime=Date.now();}});},{threshold:0.15});
+  obs.observe(canvas.parentElement);
+  function ease(t){return 1-Math.pow(1-Math.min(t,1),4);}
+  function drawGear(cx,cy,or,teeth,angle,alpha){var ir=or*0.7,th=or*0.2;ctx.beginPath();for(var i=0;i<teeth;i++){var a1=angle+(i/teeth)*Math.PI*2,a2=a1+(0.3/teeth)*Math.PI*2,a3=a1+(0.5/teeth)*Math.PI*2,a4=a1+(0.8/teeth)*Math.PI*2;ctx.lineTo(cx+Math.cos(a1)*or,cy+Math.sin(a1)*or);ctx.lineTo(cx+Math.cos(a2)*(or+th),cy+Math.sin(a2)*(or+th));ctx.lineTo(cx+Math.cos(a3)*(or+th),cy+Math.sin(a3)*(or+th));ctx.lineTo(cx+Math.cos(a4)*or,cy+Math.sin(a4)*or);}ctx.closePath();ctx.strokeStyle='rgba(91,127,181,'+alpha+')';ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,ir,0,Math.PI*2);ctx.strokeStyle='rgba(91,127,181,'+(alpha*0.6)+')';ctx.lineWidth=1;ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle='rgba(91,127,181,'+(alpha*0.8)+')';ctx.fill();}
+  function animate(){
+    requestAnimationFrame(animate);if(!started)return;
+    var el=(Date.now()-startTime)/1000,intro=ease(el/2);
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='rgba(91,127,181,'+(p.opacity*intro)+')';ctx.fill();});
+    gears.forEach(function(g,gi){var gi2=ease((el-g.delay)/1.0);if(gi2<=0)return;g.angle+=g.speed*g.dir*0.016;if(gi>0){var pv=gears[gi-1];ctx.beginPath();ctx.moveTo(g.x,g.y);ctx.lineTo(pv.x,pv.y);ctx.strokeStyle='rgba(91,127,181,'+(0.06*gi2)+')';ctx.lineWidth=0.5;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);}drawGear(g.x,g.y,g.radius*gi2,g.teeth,g.angle,0.25*gi2);var md=(mouseX>=0)?Math.sqrt((g.x-mouseX)*(g.x-mouseX)+(g.y-mouseY)*(g.y-mouseY)):999,gw=Math.max(0,1-md/(g.radius*2));if(gw>0){ctx.beginPath();ctx.arc(g.x,g.y,(g.radius+15)*gi2,0,Math.PI*2);ctx.fillStyle='rgba(91,127,181,'+(0.04*gw)+')';ctx.fill();}if(gi2>0.6){ctx.font='500 9px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.4*gi2)+')';ctx.fillText(g.label,g.x,g.y+g.radius*gi2+18);}});
+    var si=ease((el-0.8)/1.2);if(si>0){var sx2=W*0.5,sy=H*0.35,sr=Math.min(W,H)*0.04*si;for(var ri=4;ri>=1;ri--){var rr=sr*ri*1.8;ctx.beginPath();ctx.arc(sx2,sy,rr,0,Math.PI*2);ctx.strokeStyle='rgba(91,127,181,'+(0.04/ri*si)+')';ctx.lineWidth=1;ctx.stroke();if(ri===4){for(var tk=0;tk<12;tk++){var ta=el*0.2+(tk/12)*Math.PI*2,tx1=sx2+Math.cos(ta)*(rr-3),ty1=sy+Math.sin(ta)*(rr-3),tx2=sx2+Math.cos(ta)*(rr+3),ty2=sy+Math.sin(ta)*(rr+3);ctx.beginPath();ctx.moveTo(tx1,ty1);ctx.lineTo(tx2,ty2);ctx.strokeStyle='rgba(91,127,181,'+(0.12*si)+')';ctx.lineWidth=1;ctx.stroke();}}}var ss=sr*1.3;ctx.beginPath();ctx.moveTo(sx2,sy-ss*1.1);ctx.lineTo(sx2+ss*0.85,sy-ss*0.2);ctx.lineTo(sx2+ss*0.85,sy+ss*0.5);ctx.quadraticCurveTo(sx2+ss*0.5,sy+ss*1.0,sx2,sy+ss*1.2);ctx.quadraticCurveTo(sx2-ss*0.5,sy+ss*1.0,sx2-ss*0.85,sy+ss*0.5);ctx.lineTo(sx2-ss*0.85,sy-ss*0.2);ctx.closePath();ctx.fillStyle='#FFF';ctx.fill();ctx.strokeStyle='rgba(91,127,181,'+(0.5*si)+')';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=CB;ctx.globalAlpha=0.15*si;ctx.fill();ctx.globalAlpha=1;ctx.font='700 '+Math.max(8,sr*0.7)+'px "DM Sans",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(2,19,31,'+(0.6*si)+')';ctx.fillText('CORE',sx2,sy+sr*0.1);}
+    pillars.forEach(function(pl,pi){var pi2=ease((el-pl.delay)/1.0);if(pi2<=0)return;pl.currentH=pl.maxH*pi2;var px=pl.x,py=pl.y-pl.currentH,pw=pl.w,ph=pl.currentH;var pg2=ctx.createLinearGradient(px,py,px,pl.y);pg2.addColorStop(0,'rgba(91,127,181,'+(0.25*pi2)+')');pg2.addColorStop(1,'rgba(91,127,181,'+(0.06*pi2)+')');ctx.fillStyle=pg2;ctx.beginPath();ctx.moveTo(px+2,pl.y);ctx.lineTo(px+2,py+2);ctx.quadraticCurveTo(px+2,py,px+4,py);ctx.lineTo(px+pw-4,py);ctx.quadraticCurveTo(px+pw-2,py,px+pw-2,py+2);ctx.lineTo(px+pw-2,pl.y);ctx.closePath();ctx.fill();ctx.fillStyle=CB;ctx.globalAlpha=0.4*pi2;ctx.fillRect(px+2,py,pw-4,2);ctx.globalAlpha=1;var pmx=px+pw/2,pmd=(mouseX>=0)?Math.abs(mouseX-pmx):999;if(pmd<pw){ctx.fillStyle='rgba(91,127,181,0.04)';ctx.fillRect(px,py,pw,ph);}if(pi2>0.7){ctx.font='600 7px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.4*pi2)+')';ctx.fillText(pl.label,px+pw/2,pl.y+12);}});
+    var bli=ease((el-1.2)/0.8);if(bli>0&&pillars.length>0){ctx.beginPath();ctx.moveTo(W*0.05,pillars[0].y);ctx.lineTo(W*0.95,pillars[0].y);ctx.strokeStyle='rgba(2,19,31,'+(0.05*bli)+')';ctx.lineWidth=1;ctx.stroke();}
+    var fi=ease((el-2.5)/1.0);if(fi>0){[{label:'12-15%',sub:'Rev Growth',x:0.1,y:0.1},{label:'25-30',sub:'Holdings',x:0.9,y:0.08},{label:'Stable',sub:'Through Cycles',x:0.88,y:0.62}].forEach(function(fm,i){var d=ease((el-2.5-i*0.2)/0.8);if(d<=0)return;var fx=fm.x*W,fy=fm.y*H+Math.sin(el*0.8+i*2)*3;ctx.font='700 16px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(91,127,181,'+(0.7*d)+')';ctx.fillText(fm.label,fx,fy);ctx.font='400 9px "DM Sans",sans-serif';ctx.fillStyle='rgba(2,19,31,'+(0.3*d)+')';ctx.fillText(fm.sub,fx,fy+13);});}
+    var la=ease((el-3)/1.0);if(la>0){ctx.font='500 9px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.18*la)+')';ctx.fillText('INDUSTRY DOMINANCE  \u00B7  12-15% REVENUE GROWTH  \u00B7  25-30 HOLDINGS',W*0.5,H-14);}
+  }
+  animate();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOW VOLATILITY SMA CANVAS ANIMATION
+   ══════════════════════════════════════════════════════════════ */
+function initLvAnim() {
+  var canvas = document.getElementById('psma-lv-canvas'); if (!canvas) return;
+  var ctx = canvas.getContext('2d'), W, H, dpr;
+  function resize(){var r=canvas.parentElement.getBoundingClientRect();dpr=window.devicePixelRatio||1;W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+  resize();
+  var LV='#9B72B0';
+  var bricks=[],factories=[],fLabels=['MCD','WMT','JNJ','PG','KO','PEP','CL','ABT'],fH=[0.55,0.5,0.6,0.48,0.52,0.45,0.42,0.56];
+  var smokes=[],shields=[],shLabels=['Healthcare','Staples','Utilities','Defense','Dividend','Resilient'];
+  var mouseX=-1,mouseY=-1;
+  canvas.addEventListener('mousemove',function(e){var r=canvas.getBoundingClientRect();mouseX=e.clientX-r.left;mouseY=e.clientY-r.top;});
+  canvas.addEventListener('mouseleave',function(){mouseX=mouseY=-1;});
+  function buildAll(){resize();
+    factories=[];var n=fLabels.length,fw=Math.min(38,W*0.06),fg=Math.min(14,W*0.018),tot=n*fw+(n-1)*fg,sx=(W-tot)/2,by=H*0.88,mh=H*0.2;for(var i=0;i<n;i++)factories.push({x:sx+i*(fw+fg),y:by,w:fw,maxH:mh*fH[i],label:fLabels[i],currentH:0,delay:1.8+i*0.1,chX:sx+i*(fw+fg)+fw*0.7});
+    smokes=[];for(var s=0;s<35;s++){var fi=Math.floor(Math.random()*n);smokes.push({fi:fi,xOff:(Math.random()-0.5)*10,speed:0.2+Math.random()*0.4,size:2+Math.random()*4,opacity:0.04+Math.random()*0.06,progress:Math.random()});}
+    shields=[];for(var sh=0;sh<shLabels.length;sh++){var ang=Math.PI+((sh/(shLabels.length-1))*Math.PI);shields.push({angle:ang,radius:Math.min(W,H)*0.28,label:shLabels[sh],phase:Math.random()*Math.PI*2,delay:0.5+sh*0.18});}
+    bricks=[];var bw=Math.min(28,W*0.045),bh=Math.min(12,H*0.02),bg=2,cx=W*0.5,cy=H*0.38,br2=5,bc=7;for(var r2=0;r2<br2;r2++)for(var c=0;c<bc;c++){var xo=(r2%2)*bw*0.5,bx=cx-((bc*bw+(bc-1)*bg)/2)+c*(bw+bg)+xo,byy=cy-((br2*bh+(br2-1)*bg)/2)+r2*(bh+bg);bricks.push({x:bx,y:byy,w:bw,h:bh,delay:0.8+r2*0.12+c*0.04});}}
+  buildAll();window.addEventListener('resize',function(){setTimeout(buildAll,60);});
+  var startTime=0,started=false;
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&!started){started=true;startTime=Date.now();}});},{threshold:0.15});
+  obs.observe(canvas.parentElement);
+  function ease(t){return 1-Math.pow(1-Math.min(t,1),4);}
+  function animate(){
+    requestAnimationFrame(animate);if(!started)return;
+    var el=(Date.now()-startTime)/1000,intro=ease(el/2);
+    ctx.clearRect(0,0,W,H);
+    bricks.forEach(function(b){var bi=ease((el-b.delay)/0.6);if(bi<=0)return;ctx.globalAlpha=0.08*bi;ctx.fillStyle=LV;ctx.fillRect(b.x,b.y,b.w*bi,b.h);ctx.globalAlpha=1;ctx.strokeStyle='rgba(155,114,176,'+(0.12*bi)+')';ctx.lineWidth=0.5;ctx.strokeRect(b.x,b.y,b.w*bi,b.h);});
+    var si=ease((el-0.6)/1.2);if(si>0){var sx2=W*0.5,sy=H*0.38,sr=Math.min(W,H)*0.06*si;for(var ri=3;ri>=1;ri--){var rr=sr*ri*1.6,pl=1+Math.sin(el*0.5+ri)*0.03;ctx.beginPath();ctx.arc(sx2,sy,rr*pl,0,Math.PI*2);ctx.strokeStyle='rgba(155,114,176,'+(0.05/ri*si)+')';ctx.lineWidth=1.5;ctx.stroke();}var ss=sr*1.3;ctx.beginPath();ctx.moveTo(sx2,sy-ss*1.1);ctx.lineTo(sx2+ss*0.85,sy-ss*0.2);ctx.lineTo(sx2+ss*0.85,sy+ss*0.5);ctx.quadraticCurveTo(sx2+ss*0.5,sy+ss*1.0,sx2,sy+ss*1.2);ctx.quadraticCurveTo(sx2-ss*0.5,sy+ss*1.0,sx2-ss*0.85,sy+ss*0.5);ctx.lineTo(sx2-ss*0.85,sy-ss*0.2);ctx.closePath();ctx.fillStyle='#FFF';ctx.fill();ctx.strokeStyle='rgba(155,114,176,'+(0.45*si)+')';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=LV;ctx.globalAlpha=0.1*si;ctx.fill();ctx.globalAlpha=1;var lk=sr*0.35;ctx.strokeStyle='rgba(155,114,176,'+(0.6*si)+')';ctx.lineWidth=2;ctx.fillStyle='rgba(155,114,176,'+(0.15*si)+')';ctx.fillRect(sx2-lk,sy-lk*0.2,lk*2,lk*1.5);ctx.strokeRect(sx2-lk,sy-lk*0.2,lk*2,lk*1.5);ctx.beginPath();ctx.arc(sx2,sy-lk*0.2,lk*0.7,Math.PI,0);ctx.stroke();ctx.font='600 '+Math.max(7,sr*0.3)+'px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.4*si)+')';ctx.fillText('CAPITAL',sx2,sy+ss*1.2+16);ctx.fillText('PRESERVATION',sx2,sy+ss*1.2+28);}
+    var hx=W*0.5,hy=H*0.38;shields.forEach(function(sh,i){var si2=ease((el-sh.delay)/0.8);if(si2<=0)return;var nx=hx+Math.cos(sh.angle)*sh.radius*si2,ny=hy+Math.sin(sh.angle)*sh.radius*si2*0.55;ctx.beginPath();ctx.moveTo(nx,ny);ctx.lineTo(hx,hy);ctx.strokeStyle='rgba(155,114,176,'+(0.06*si2)+')';ctx.lineWidth=0.5;ctx.setLineDash([3,4]);ctx.stroke();ctx.setLineDash([]);var md=(mouseX>=0)?Math.sqrt((nx-mouseX)*(nx-mouseX)+(ny-mouseY)*(ny-mouseY)):999,gw=Math.max(0,1-md/60),nr=14*si2;if(gw>0){ctx.beginPath();ctx.arc(nx,ny,nr+8,0,Math.PI*2);ctx.fillStyle='rgba(155,114,176,'+(0.06*gw)+')';ctx.fill();}ctx.beginPath();ctx.arc(nx,ny,nr,0,Math.PI*2);ctx.fillStyle='#FFF';ctx.fill();ctx.strokeStyle='rgba(155,114,176,'+(0.3+gw*0.3)+')';ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.arc(nx,ny,3,0,Math.PI*2);ctx.fillStyle=LV;ctx.globalAlpha=0.35*si2;ctx.fill();ctx.globalAlpha=1;ctx.font='500 8px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.4*si2)+')';ctx.fillText(sh.label,nx,ny+nr+11);});
+    var hbi=ease((el-1.5)/1.5);if(hbi>0){var hbY=H*0.62,hsx=W*0.08,hex=W*0.92,hlen=hex-hsx,dlen=hlen*hbi;ctx.beginPath();for(var hx2=0;hx2<dlen;hx2+=2){var x=hsx+hx2,ph=(hx2/hlen)*Math.PI*8+el*1.5,amp=H*0.015,sp=Math.pow(Math.max(0,Math.sin(ph*0.5)),8)*H*0.04,y=hbY+Math.sin(ph)*amp-sp;if(hx2===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.strokeStyle='rgba(155,114,176,'+(0.25*hbi)+')';ctx.lineWidth=1.5;ctx.stroke();if(hbi>0.1){var tx=hsx+dlen,tph=(dlen/hlen)*Math.PI*8+el*1.5,ty=hbY+Math.sin(tph)*H*0.015-Math.pow(Math.max(0,Math.sin(tph*0.5)),8)*H*0.04;ctx.beginPath();ctx.arc(tx,ty,3,0,Math.PI*2);ctx.fillStyle=LV;ctx.fill();ctx.beginPath();ctx.arc(tx,ty,7+Math.sin(el*2)*2,0,Math.PI*2);ctx.strokeStyle='rgba(155,114,176,0.2)';ctx.lineWidth=1;ctx.stroke();}ctx.font='500 8px "DM Sans",sans-serif';ctx.textAlign='left';ctx.fillStyle='rgba(2,19,31,'+(0.2*hbi)+')';ctx.fillText('LOW VOLATILITY',hsx,hbY-H*0.035);}
+    factories.forEach(function(f,fi){var fi2=ease((el-f.delay)/1.0);if(fi2<=0)return;f.currentH=f.maxH*fi2;var fx=f.x,fy=f.y-f.currentH,fw=f.w,fh=f.currentH;var fg2=ctx.createLinearGradient(fx,fy,fx,f.y);fg2.addColorStop(0,'rgba(155,114,176,'+(0.2*fi2)+')');fg2.addColorStop(1,'rgba(155,114,176,'+(0.05*fi2)+')');ctx.fillStyle=fg2;ctx.fillRect(fx+1,fy,fw-2,fh);ctx.fillStyle=LV;ctx.globalAlpha=0.35*fi2;ctx.fillRect(fx+1,fy,fw-2,2);ctx.globalAlpha=1;var chW=fw*0.2;ctx.fillStyle='rgba(155,114,176,'+(0.15*fi2)+')';ctx.fillRect(f.chX-chW/2,fy-fh*0.15,chW,fh*0.15);var fmx=fx+fw/2,fmd=(mouseX>=0)?Math.abs(mouseX-fmx):999;if(fmd<fw){ctx.fillStyle='rgba(155,114,176,0.04)';ctx.fillRect(fx,fy,fw,fh);}if(fi2>0.7){ctx.font='600 7px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.4*fi2)+')';ctx.fillText(f.label,fx+fw/2,f.y+12);}});
+    if(factories.length>0){var fbi=ease((el-1.6)/0.8);if(fbi>0){ctx.beginPath();ctx.moveTo(W*0.05,factories[0].y);ctx.lineTo(W*0.95,factories[0].y);ctx.strokeStyle='rgba(2,19,31,'+(0.05*fbi)+')';ctx.lineWidth=1;ctx.stroke();}}
+    smokes.forEach(function(sm){var f=factories[sm.fi];if(!f)return;var fi2=ease((el-f.delay)/1.0);if(fi2<0.8)return;sm.progress+=sm.speed*0.008;if(sm.progress>1)sm.progress=0;var bx=f.chX+sm.xOff,byy=f.y-f.currentH-f.currentH*0.15,rise=sm.progress*H*0.2,drift=Math.sin(el*0.5+sm.xOff)*8*sm.progress;var fo=1-sm.progress,sz=sm.size*(0.5+sm.progress*0.8);ctx.beginPath();ctx.arc(bx+drift,byy-rise,sz,0,Math.PI*2);ctx.fillStyle='rgba(155,114,176,'+(sm.opacity*fo*fi2)+')';ctx.fill();});
+    var fmi=ease((el-2.8)/1.0);if(fmi>0){[{label:'7-12%',sub:'Rev Growth',x:0.1,y:0.12},{label:'25-30',sub:'Holdings',x:0.92,y:0.1},{label:'Defensive',sub:'Capital First',x:0.1,y:0.72}].forEach(function(fm,i){var d=ease((el-2.8-i*0.2)/0.8);if(d<=0)return;var fx=fm.x*W,fy=fm.y*H+Math.sin(el*0.6+i*2)*2;ctx.font='700 16px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(155,114,176,'+(0.65*d)+')';ctx.fillText(fm.label,fx,fy);ctx.font='400 9px "DM Sans",sans-serif';ctx.fillStyle='rgba(2,19,31,'+(0.28*d)+')';ctx.fillText(fm.sub,fx,fy+13);});}
+    var la=ease((el-3.2)/1.0);if(la>0){ctx.font='500 9px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(2,19,31,'+(0.18*la)+')';ctx.fillText('CAPITAL PRESERVATION  \u00B7  7-12% REVENUE GROWTH  \u00B7  25-30 HOLDINGS',W*0.5,H-14);}
+  }
+  animate();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL FADE-IN OBSERVER
+   ══════════════════════════════════════════════════════════════ */
+function initFades() {
+  var els = document.querySelectorAll('.psma-page .psma-fade');
+  var obs = new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  els.forEach(function(el){ obs.observe(el); });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════════════════════════ */
+function init() {
+  initFades();
+  fetchCAGRs();
+  initInnAnim();
+  initGroAnim();
+  initCoreAnim();
+  initLvAnim();
+  initGrowthChart();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+})();
+</script>
