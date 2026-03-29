@@ -927,9 +927,7 @@ document.querySelectorAll('.psma-fade, .psma-fade-left, .psma-fade-right, .psma-
   document.querySelectorAll('.psmb-fade, .psmb-fade-left, .psmb-fade-right, .psmb-fade-scale').forEach(function(el){ obs.observe(el); });
 })();
 </script>
-
-</body>
-  <script>
+<script>
 (function(){
   function send(){
     if(window.parent!==window){
@@ -942,4 +940,3 @@ document.querySelectorAll('.psma-fade, .psma-fade-left, .psma-fade-right, .psma-
   var n=0,t=setInterval(function(){send();if(++n>15)clearInterval(t);},2000);
 })();
 </script>
-</html>
