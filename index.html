@@ -929,4 +929,17 @@ document.querySelectorAll('.psma-fade, .psma-fade-left, .psma-fade-right, .psma-
 </script>
 
 </body>
+  <script>
+(function(){
+  function send(){
+    if(window.parent!==window){
+      window.parent.postMessage({type:'brim-iframe-resize',height:document.documentElement.scrollHeight},'*');
+    }
+  }
+  new ResizeObserver(send).observe(document.documentElement);
+  window.addEventListener('load',send);
+  send();
+  var n=0,t=setInterval(function(){send();if(++n>15)clearInterval(t);},2000);
+})();
+</script>
 </html>
